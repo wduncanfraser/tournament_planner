@@ -5,6 +5,7 @@
 --
 -- You can write comments in this file by starting them with two dashes, like
 -- these lines here.
+DROP VIEW rankings;
 DROP TABLE Match;
 DROP TABLE Player;
 
@@ -21,3 +22,10 @@ CREATE TABLE Match (
   CHECK (Player_1_id != Match.Player_2_id),
   CHECK (winner_Player_id = Player_1_id OR winner_Player_id = Player_2_id)
 );
+
+CREATE VIEW rankings AS
+  SELECT Player.id, name,
+  (SELECT COUNT(*) FROM Match WHERE Player.id = Match.winner_Player_id) AS wins,
+  (SELECT COUNT(*) FROM Match WHERE Player.id = Match.Player_1_id OR Player.id = Match.Player_2_id) AS matches
+  FROM Player
+  ORDER BY wins DESC;

@@ -84,11 +84,7 @@ def playerStandings():
     conn = connect()
     c = conn.cursor()
 
-    c.execute('SELECT Player.id, name, '
-              '(SELECT COUNT(*) FROM Match WHERE Player.id = Match.winner_Player_id) AS wins, '
-              '(SELECT COUNT(*) FROM Match WHERE Player.id = Match.Player_1_id OR Player.id = Match.Player_2_id) AS matches '
-              'FROM Player '
-              'ORDER BY wins DESC')
+    c.execute('SELECT * FROM rankings')
 
     conn.commit()
 
@@ -133,4 +129,9 @@ def swissPairings():
         name2: the second player's name
     """
 
+    standings = playerStandings()
 
+    pairs = [(standings[i][0], standings[i][1], standings[i-1][0], standings[i-1][1])
+             for i in range(1, len(standings), 2)]
+
+    return pairs
