@@ -93,7 +93,8 @@ def testReportMatches():
     for (i, n, w, m) in standings:
         if m != 1:
             raise ValueError("Each player should have one match recorded.")
-        if i in (id1, id3) and w != 1:
+        # Adjusted win value to 3 to compensate for new scoring, wins are worth 3 points
+        if i in (id1, id3) and w != 3:
             raise ValueError("Each match winner should have one win recorded.")
         elif i in (id2, id4) and w != 0:
             raise ValueError("Each match loser should have zero wins recorded.")
