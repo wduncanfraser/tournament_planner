@@ -9,11 +9,13 @@ DROP VIEW rankings;
 DROP TABLE Match;
 DROP TABLE Player;
 
+-- Player table
 CREATE TABLE Player (
   id SERIAL PRIMARY KEY,
   name VARCHAR(100)
 );
 
+-- Table for recording matches
 CREATE TABLE Match (
   id SERIAL PRIMARY KEY,
   Player_1_id INT NOT NULL REFERENCES Player(id),
@@ -23,6 +25,7 @@ CREATE TABLE Match (
   CHECK (winner_Player_id = Player_1_id OR winner_Player_id = Player_2_id)
 );
 
+-- View for selecting current rankings by wins
 CREATE VIEW rankings AS
   SELECT Player.id, name,
   (SELECT COUNT(*) FROM Match WHERE Player.id = Match.winner_Player_id) AS wins,

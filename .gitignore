@@ -7,6 +7,9 @@
 # ignore vagrant
 /.vagrant
 
+# ignore virtualenv
+/virtualenv
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
